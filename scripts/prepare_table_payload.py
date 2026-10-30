@@ -9,7 +9,9 @@ prepare_table_payload.py — 将岗位核查结果按"批次升序 + 批次内�
 
 输入格式:
   CSV : 表头含 批次/公司/.../适配等级 9列（列名含"批次"与"适配等级"即可，其余列按顺序）
-  JSON: 数组，每项为 dict 或数组；dict 键含 "批次" 与 "适配等级"（或英文 batch/level）
+  JSON: 数组，每项为 dict 或数组；dict 键支持中文列名与英文别名
+        （batch/company/website/status/roles/evidence/location/notes/level），
+        键可只写部分字段，缺失列自动留空；数值键自动转字符串。
 
 排序规则:
   1. 批次升序（1→2→3…）
@@ -31,6 +33,19 @@ HEADER = ["批次", "公司", "官网/招聘入口", "校招状态", "目标职�
 
 LEVEL_ORDER = {"高适配": 4, "中高适配": 3, "中适配": 2, "低适配": 1, "未确认": 0}
 
+# JSON dict 输入的英文别名（键可全用英文，如 {"batch":1,"company":"A","level":"高适配"}）
+ALIAS = {
+    "批次": "batch",
+    "公司": "company",
+    "官网/招聘入口": "website",
+    "校招状态": "status",
+    "目标职能岗": "roles",
+    "证据说明": "evidence",
+    "地点/可投性": "location",
+    "备注": "notes",
+    "适配等级": "level",
+}
+
 
 def load_rows(path):
     text = open(path, encoding="utf-8-sig").read()
@@ -39,8 +54,7 @@ def load_rows(path):
         rows = []
         for item in data:
             if isinstance(item, dict):
-                rows.append([item.get(c, item.get(c.replace("官网/招聘入口", "官网"), ""))
-                              for c in HEADER])
+                rows.append([_lookup(item, c) for c in HEADER])
             else:
                 rows.append(list(item)[:9])
         return HEADER, rows
@@ -52,14 +66,29 @@ def load_rows(path):
     return header, lines[1:]
 
 
+def _lookup(item, col):
+    """dict 中取列值：优先中文键，其次英文别名；数字转字符串。"""
+    for key in (col, ALIAS[col]):
+        if key in item and item[key] is not None:
+            v = item[key]
+            return str(v) if not isinstance(v, str) else v
+    return ""
+
+
 def sort_rows(rows):
     def key(r):
-        batch = r[0].strip() if r else ""
+        batch = ""
+        level = ""
+        if r:
+            v0 = r[0]
+            batch = str(v0).strip() if v0 is not None else ""
+        if len(r) > 8:
+            v8 = r[8]
+            level = str(v8).strip() if v8 is not None else ""
         try:
             b = int(batch)
         except ValueError:
             b = 99
-        level = r[8].strip() if len(r) > 8 else ""
         return (b, -LEVEL_ORDER.get(level, 0))
     return sorted(rows, key=key)
 
