@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 prepare_table_payload.py — 将岗位核查结果按"批次升序 + 批次内适配等级降序"排序，
-输出可直接写入飞书表格的 CSV（含表头，9列）。
+输出可直接交付的排序后 CSV（含表头，9列）。
 
 用法:
   python3 prepare_table_payload.py <输入.csv|json> [输出.csv]

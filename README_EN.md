@@ -28,9 +28,9 @@ A ready-to-use AI Agent Skill that turns **a batch of company names into a verif
 |---|---|
 | A screenshot / logo grid of recruiting companies | Per-company official-site recruiting status (open / closed / none / unconfirmed) |
 | A text list of company names | Whether target roles exist (data / procurement / project / product / analysis) |
-| An existing spreadsheet (e.g. a "collect" table) | Per-company fit level (High / Medium-High / Medium / Low) |
+| An existing spreadsheet | Per-company fit level (High / Medium-High / Medium / Low) |
 | Your resume (**image or PDF**) | **Auto-parses** your profile (major / skills / target roles / preferred cities) — no manual form-filling |
-| Your job preferences (spoken or written) | A Feishu (Lark) table sorted by batch + fit level, plus application priority advice |
+| Your job preferences (spoken or written) | A structured local table (CSV/XLSX) sorted by batch + fit level, plus application priority advice |
 
 **Who it's for**: fresh graduates, interns converting to full-time, or anyone screening many companies at once.
 
@@ -76,11 +76,11 @@ Your input (company list + resume / preferences)
 ┌───────────────────────────────────────┐
 │ Step 5  Build the table               │
 │ 9-column structure → sort by batch +  │
-│ fit level → write to Feishu sheet     │
+│ fit level → generate a local table file│
 └───────────────────────────────────────┘
         │
         ▼
-  Deliver: Feishu sheet link + application advice
+  Deliver: local table file + application advice
 ```
 
 **Why the results are trustworthy**:
@@ -143,7 +143,7 @@ Just talk to your Agent in plain language:
 | "Look up these companies' recruiting records and organize them into a table" (with text list) | Same as above, producing the 9-column table |
 | "Here's my resume, tell me which jobs fit me" (**with resume image or PDF**) | **Auto-parses the resume** → extracts your profile → assesses fit against the company list |
 | "Filter out companies that have data-analyst roles" | Filter by your target roles + sort by fit level |
-| "Append these 21 companies to my collect table (batch 3)" | Reuse existing table, append as a new batch |
+| "Append these 21 companies to my table (batch 3)" | Reuse existing table, append as a new batch |
 | "Sort the table by batch" | Batch ascending + fit level descending within each batch |
 
 **On first use**: if you upload your resume (**image, photo, or PDF all work**), the Agent **auto-parses** your major, skills, internship experience, target roles, and preferred cities — **no need to fill anything in**. It will only ask a few questions (to assess fit) when no resume is provided, or when key info is missing from the resume:
@@ -161,7 +161,7 @@ Answer honestly — the more detail, the more accurate the fit levels.
 
 ## The output table
 
-A Feishu (Lark) sheet with 9 columns, sorted by **batch → fit level (High → Low) within each batch**:
+A structured table with 9 columns, sorted by **batch → fit level (High → Low) within each batch**, delivered as a **local CSV file by default** (open directly in Excel / WPS; an XLSX can be produced when styling is needed):
 
 | Column | Description | Example |
 |---|---|---|
@@ -214,8 +214,8 @@ Screenshots and WeChat posts can be lagging or exaggerated. The official careers
 **Q3: What if there are too many companies?**
 With ≥8 companies the Skill auto-shards and runs in parallel; dozens of companies complete in reasonable time.
 
-**Q4: I already have a collect table — can it be appended?**
-Yes. Tell the Agent "append to collect table"; it continues with the next batch number and keeps the exact same field conventions.
+**Q4: I already have an existing table — can it be appended?**
+Yes. Tell the Agent where the table file is (or give the filename); it reads the original, continues with the next batch number, and keeps the exact same field conventions.
 
 **Q5: I want to change the target-role scope (e.g. only data-analyst roles)?**
 Just tell the Agent your preference; the target-roles column will be judged accordingly.
