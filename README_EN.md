@@ -29,7 +29,8 @@ A ready-to-use AI Agent Skill that turns **a batch of company names into a verif
 | A screenshot / logo grid of recruiting companies | Per-company official-site recruiting status (open / closed / none / unconfirmed) |
 | A text list of company names | Whether target roles exist (data / procurement / project / product / analysis) |
 | An existing spreadsheet (e.g. a "collect" table) | Per-company fit level (High / Medium-High / Medium / Low) |
-| Your resume / job preferences | A Feishu (Lark) table sorted by batch + fit level, plus application priority advice |
+| Your resume (**image or PDF**) | **Auto-parses** your profile (major / skills / target roles / preferred cities) — no manual form-filling |
+| Your job preferences (spoken or written) | A Feishu (Lark) table sorted by batch + fit level, plus application priority advice |
 
 **Who it's for**: fresh graduates, interns converting to full-time, or anyone screening many companies at once.
 
@@ -140,11 +141,12 @@ Just talk to your Agent in plain language:
 |---|---|
 | "Check these 27 companies for campus recruiting" (with logo screenshot) | Recognize companies → verify each on official site → build the table |
 | "Look up these companies' recruiting records and organize them into a table" (with text list) | Same as above, producing the 9-column table |
+| "Here's my resume, tell me which jobs fit me" (**with resume image or PDF**) | **Auto-parses the resume** → extracts your profile → assesses fit against the company list |
 | "Filter out companies that have data-analyst roles" | Filter by your target roles + sort by fit level |
 | "Append these 21 companies to my collect table (batch 3)" | Reuse existing table, append as a new batch |
 | "Sort the table by batch" | Batch ascending + fit level descending within each batch |
 
-**On first use**, the Agent may ask a few questions (used to assess fit):
+**On first use**: if you upload your resume (**image, photo, or PDF all work**), the Agent **auto-parses** your major, skills, internship experience, target roles, and preferred cities — **no need to fill anything in**. It will only ask a few questions (to assess fit) when no resume is provided, or when key info is missing from the resume:
 
 ```
 Your major / graduation date?
@@ -220,6 +222,9 @@ Just tell the Agent your preference; the target-roles column will be judged acco
 
 **Q6: Does this Skill leak my privacy?**
 No. It works only on what you voluntarily provide (company list, job preferences) and verifies everything against public official-website information.
+
+**Q7: What resume formats are supported?**
+Images (screenshots, photos) and PDFs both work. Upload one and the Agent auto-parses your profile — no manual form-filling. Extra-long resume screenshots are automatically sliced into segments to ensure complete parsing.
 
 ---
 
